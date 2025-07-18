@@ -1,3 +1,4 @@
+import resolve from '@rollup/plugin-node-resolve';
 import screeps from 'rollup-plugin-screeps';
 import typescript from '@rollup/plugin-typescript';
 
@@ -11,5 +12,5 @@ export default {
         sourcemap: false,
     },
 
-    plugins: [typescript(), screeps({ configFile: './screeps.json' })],
+    plugins: [resolve(), typescript(), screeps({ configFile: './screeps.json' })],
 };

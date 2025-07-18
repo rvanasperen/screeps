@@ -5,8 +5,11 @@
         "dev": "rollup --config --watch"
     },
     "devDependencies": {
+        "@rollup/plugin-node-resolve": "^16.0.1",
         "@rollup/plugin-typescript": "^12.1.4",
+        "@types/lodash": "3.10.1",
         "@types/screeps": "^3.3.8",
+        "lodash": "3.10.1",
         "prettier": "^3.6.2",
         "rollup": "^4.45.1",
         "rollup-plugin-screeps": "^1.0.1",
