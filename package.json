@@ -1,0 +1,15 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "rollup --config",
+        "dev": "rollup --config --watch"
+    },
+    "devDependencies": {
+        "@rollup/plugin-typescript": "^12.1.4",
+        "@types/screeps": "^3.3.8",
+        "rollup": "^4.45.1",
+        "rollup-plugin-screeps": "^1.0.1",
+        "tslib": "^2.8.1",
+        "typescript": "^5.8.3"
+    }
+}
