@@ -8,11 +8,8 @@ export default {
     output: {
         file: 'dist/main.js',
         format: 'cjs',
-        sourcemap: true,
+        sourcemap: false,
     },
 
-    plugins: [
-        typescript(),
-        screeps({configFile: './screeps.json'}),
-    ],
-}
+    plugins: [typescript(), screeps({ configFile: './screeps.json' })],
+};
