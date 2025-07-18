@@ -1,7 +1,6 @@
-import { test } from './test';
+import ColonyManager from './Colony/ColonyManager';
 
 // noinspection JSUnusedGlobalSymbols
 export function loop(): void {
-    console.log('loop');
-    test();
+    new ColonyManager().run();
 }
