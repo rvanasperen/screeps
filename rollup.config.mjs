@@ -13,8 +13,6 @@ export default {
 
     plugins: [
         typescript(),
-        screeps({
-            configFile: './screeps.json',
-        })
+        screeps({configFile: './screeps.json'})
     ],
 }
