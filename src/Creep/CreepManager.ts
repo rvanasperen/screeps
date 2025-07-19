@@ -52,10 +52,11 @@ export default class CreepManager {
         }
 
         for (const job of this.jobManager.getJobsByType(JobType.Harvest)) {
+            console.log(`  - Job: ${job.id}`);
             const activeCreep =
-                _.filter(Game.creeps, {
-                    filter: (creep: Creep) => creep.memory.jobId === job.id,
-                })[0] ?? null;
+                _.filter(Game.creeps, (creep: Creep) => creep.memory.jobId === job.id)[0] ?? null;
+
+            console.log(`  - Active creep: ${activeCreep}`)
 
             if (activeCreep) {
                 console.log(`  - Active creep: ${activeCreep.name}`);
