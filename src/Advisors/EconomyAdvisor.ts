@@ -1,14 +1,8 @@
-import JobManager from '../Job/JobManager';
 import JobType from '../Job/JobType';
+import BaseAdvisor from './BaseAdvisor';
 
-export default class EconomyAdvisor {
-    private readonly jobManager: JobManager;
-
-    constructor(jobManager: JobManager) {
-        this.jobManager = jobManager;
-    }
-
-    run(): void {
+export default class EconomyAdvisor extends BaseAdvisor {
+    public run(): void {
         console.log('    EconomyAdvisor');
 
         const room = Game.rooms['sim'];

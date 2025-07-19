@@ -1,16 +1,15 @@
-import JobManager from '../Job/JobManager';
-import EconomyAdvisor from './EconomyAdvisor';
+import BaseAdvisor from './BaseAdvisor';
 
 export default class Council {
-    private readonly jobManager: JobManager;
+    private readonly advisors: BaseAdvisor[] = [];
 
-    constructor(jobManager: JobManager) {
-        this.jobManager = jobManager;
+    public constructor(advisors: BaseAdvisor[] = []) {
+        this.advisors = advisors;
     }
 
-    run(): void {
-        console.log('  Council');
-
-        new EconomyAdvisor(this.jobManager).run();
+    public run(): void {
+        for (const advisor of this.advisors) {
+            advisor.run();
+        }
     }
 }

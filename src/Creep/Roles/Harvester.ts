@@ -1,7 +1,7 @@
 import BaseRole from './BaseRole';
 
 export default class Harvester extends BaseRole {
-    run(): void {
+    public run(): void {
         console.log('  - Harvester');
         if (this.creep.store.getFreeCapacity() > 0) {
             const source: Source =

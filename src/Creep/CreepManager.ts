@@ -5,18 +5,18 @@ import Harvester from './Roles/Harvester';
 export default class CreepManager {
     private readonly jobManager: JobManager;
 
-    constructor(jobManager: JobManager) {
+    public constructor(jobManager: JobManager) {
         this.jobManager = jobManager;
     }
 
-    run(): void {
+    public run(): void {
         console.log('  CreepManager');
 
         this.runCreeps();
         this.spawnCreeps();
     }
 
-    runCreeps(): void {
+    private runCreeps(): void {
         for (const name in Memory.creeps) {
             const creep = Game.creeps[name];
 
@@ -44,7 +44,7 @@ export default class CreepManager {
         }
     }
 
-    spawnCreeps(): void {
+    private spawnCreeps(): void {
         console.log('  - Available jobs:');
 
         for (const job of this.jobManager.getJobs()) {
