@@ -1,8 +1,18 @@
 import BaseRole from './BaseRole';
 
-export default class Harvester extends BaseRole {
+enum HarvesterState {
+    Idle,
+    MoveToSource,
+    HarvestSource,
+    MoveToStorage,
+    TransferEnergyToStorage,
+}
+
+export class HarvesterRole extends BaseRole {
+    private state: HarvesterState = HarvesterState.Idle;
+
     public run(): void {
-        console.log('  - Harvester');
+        // console.log('  - Harvester');
         if (this.creep.store.getFreeCapacity() > 0) {
             const source: Source =
                 this.creep.room.find(FIND_SOURCES, {

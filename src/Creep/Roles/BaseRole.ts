@@ -8,4 +8,6 @@ export default abstract class BaseRole {
         this.creep = creep;
         this.job = job;
     }
+
+    public abstract run(): void;
 }
