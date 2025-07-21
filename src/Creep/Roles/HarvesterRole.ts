@@ -28,8 +28,7 @@ export class HarvesterRole extends BaseRole {
         const target = Game.getObjectById<Id<Source>>(this.job.targetId);
 
         if (!target) {
-            console.error(`Harvester ${this.creep.name} couldn't find a target to harvest`);
-            return;
+            return console.error(`Harvester '${this.creep.name}' couldn't find a source to harvest`);
         }
 
         if (this.creep.harvest(target) === ERR_NOT_IN_RANGE) {
@@ -66,8 +65,7 @@ export class HarvesterRole extends BaseRole {
             })[0] ?? null;
 
         if (!target) {
-            console.error(`Harvester ${this.creep.name} couldn't find a target to deposit energy`);
-            return;
+            return console.error(`Harvester '${this.creep.name}' couldn't find a structure to deposit energy`);
         }
 
         if (this.creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
