@@ -1,6 +1,6 @@
 import BaseAdvisor from './BaseAdvisor';
 
-export default class Council {
+export class Council {
     private readonly advisors: BaseAdvisor[] = [];
 
     public constructor(advisors: BaseAdvisor[] = []) {

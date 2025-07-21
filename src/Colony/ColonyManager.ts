@@ -1,4 +1,4 @@
-import Council from '../Advisors/Council';
+import { Council } from '../Advisors';
 import CreepManager from '../Creep/CreepManager';
 
 export default class ColonyManager {
