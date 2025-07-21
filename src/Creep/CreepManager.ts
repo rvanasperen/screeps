@@ -51,9 +51,9 @@ export default class CreepManager {
     private spawnCreeps(): void {
         // console.log('  - Available jobs:');
 
-        for (const job of this.jobManager.getJobs()) {
-            console.log(job);
-        }
+        // for (const job of this.jobManager.getJobs()) {
+        //     console.log(job);
+        // }
 
         for (const job of this.jobManager.getJobsByType(JobType.Harvest)) {
             // console.log(`  - Job: ${job.id}`);
