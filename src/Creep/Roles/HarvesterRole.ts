@@ -1,52 +1,73 @@
 import BaseRole from './BaseRole';
 
 enum HarvesterState {
-    Idle,
-    MoveToSource,
-    HarvestSource,
-    MoveToStorage,
-    TransferEnergyToStorage,
+    Harvest,
+    Return,
 }
 
 export class HarvesterRole extends BaseRole {
-    private state: HarvesterState = HarvesterState.Idle;
+    private state: HarvesterState = HarvesterState.Harvest;
 
     public run(): void {
-        // console.log('  - Harvester');
-        if (this.creep.store.getFreeCapacity() > 0) {
-            const source: Source =
-                this.creep.room.find(FIND_SOURCES, {
-                    filter: (source: Source) => source.id === this.job.targetId,
-                })[0] ?? null;
+        const stateMethods = {
+            [HarvesterState.Harvest]: this.runHarvest,
+            [HarvesterState.Return]: this.runReturn,
+        };
 
-            if (!source) {
-                throw new Error('Source not found');
-            }
+        stateMethods[this.state].call(this);
+    }
 
-            if (this.creep.harvest(source) == ERR_NOT_IN_RANGE) {
-                this.creep.moveTo(source, {
-                    visualizePathStyle: {
-                        stroke: '#ffaa00',
-                    },
-                });
-            }
-        } else {
-            const spawn: Structure =
-                this.creep.room.find(FIND_STRUCTURES, {
-                    filter: structure => structure.structureType === STRUCTURE_SPAWN,
-                })[0] ?? null;
+    private runHarvest(): void {
+        if (this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
+            this.state = HarvesterState.Return;
+            return;
+        }
 
-            if (!spawn) {
-                throw new Error('Spawn not found');
-            }
+        const target: Source = Game.getObjectById(this.job.targetId);
 
-            if (this.creep.transfer(spawn, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-                this.creep.moveTo(spawn, {
-                    visualizePathStyle: {
-                        stroke: '#ffffff',
-                    },
-                });
-            }
+        if (this.creep.harvest(target) === ERR_NOT_IN_RANGE) {
+            this.creep.moveTo(target, {
+                visualizePathStyle: {
+                    stroke: '#ffaa00',
+                },
+            });
+        }
+    }
+
+    private runReturn(): void {
+        if (this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === this.creep.store.getCapacity(RESOURCE_ENERGY)) {
+            this.state = HarvesterState.Harvest;
+            return;
+        }
+
+        const eligibleTargets: StructureConstant[] = [STRUCTURE_SPAWN, STRUCTURE_EXTENSION, STRUCTURE_CONTAINER];
+
+        const target: Structure =
+            this.creep.room.find(FIND_STRUCTURES, {
+                filter: structure => {
+                    if (!eligibleTargets.includes(structure.structureType)) {
+                        return false;
+                    }
+
+                    // noinspection RedundantIfStatementJS
+                    if (!('store' in structure) || structure.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
+                        return false;
+                    }
+
+                    return true;
+                },
+            })[0] ?? null;
+
+        if (!target) {
+            throw new Error('No structure found to transfer energy to');
+        }
+
+        if (this.creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+            this.creep.moveTo(target, {
+                visualizePathStyle: {
+                    stroke: '#ffffff',
+                },
+            });
         }
     }
 }
