@@ -25,22 +25,19 @@ export class HarvesterRole extends BaseRole {
             return;
         }
 
-        const target: Source = Game.getObjectById(this.job.targetId);
+        const target = Game.getObjectById<Id<Source>>(this.job.targetId);
 
-        const result = this.creep.harvest(target);
+        if (!target) {
+            console.error(`Harvester ${this.creep.name} couldn't find a target to harvest`);
+            return;
+        }
 
-        if (result === ERR_NOT_IN_RANGE) {
+        if (this.creep.harvest(target) === ERR_NOT_IN_RANGE) {
             this.creep.moveTo(target, {
                 visualizePathStyle: {
                     stroke: '#ffaa00',
                 },
             });
-
-            return;
-        }
-
-        if (result === OK && this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-            this.creep.memory.state = HarvesterState.Return;
         }
     }
 
@@ -69,26 +66,16 @@ export class HarvesterRole extends BaseRole {
             })[0] ?? null;
 
         if (!target) {
-            throw new Error('No structure found to transfer energy to');
+            console.error(`Harvester ${this.creep.name} couldn't find a target to deposit energy`);
+            return;
         }
 
-        const result = this.creep.transfer(target, RESOURCE_ENERGY);
-
-        if (result === ERR_NOT_IN_RANGE) {
+        if (this.creep.transfer(target, RESOURCE_ENERGY) === ERR_NOT_IN_RANGE) {
             this.creep.moveTo(target, {
                 visualizePathStyle: {
                     stroke: '#ffffff',
                 },
             });
-
-            return;
-        }
-
-        if (
-            result === OK &&
-            this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === this.creep.store.getCapacity(RESOURCE_ENERGY)
-        ) {
-            this.creep.memory.state = HarvesterState.Harvest;
         }
     }
 }
