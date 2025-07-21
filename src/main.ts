@@ -1,7 +1,7 @@
-import ColonyManager from './Colony/ColonyManager';
-import JobManager from './Job/JobManager';
-import { Council, EconomyAdvisor } from './Advisors';
-import CreepManager from './Creep/CreepManager';
+import ColonyManager from '@/Colony/ColonyManager';
+import JobManager from '@/Job/JobManager';
+import { Council, EconomyAdvisor } from '@/Advisors';
+import CreepManager from '@/Creep/CreepManager';
 
 // noinspection JSUnusedGlobalSymbols
 export function loop(): void {

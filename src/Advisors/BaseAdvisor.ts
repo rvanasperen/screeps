@@ -1,4 +1,4 @@
-import JobManager from '../Job/JobManager';
+import JobManager from '@/Job/JobManager';
 
 export default abstract class BaseAdvisor {
     protected readonly jobManager: JobManager;

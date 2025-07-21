@@ -9,6 +9,9 @@
         "moduleResolution": "Node",
         "outDir": "dist",
         "baseUrl": "src/",
+        "paths": {
+            "@/*": ["./*"]
+        },
         "sourceMap": true,
         "strict": true,
         "experimentalDecorators": true,

@@ -1,5 +1,5 @@
-import JobManager from '../Job/JobManager';
-import JobType from '../Job/JobType';
+import JobManager from '@/Job/JobManager';
+import JobType from '@/Job/JobType';
 import { HarvesterRole } from './Roles';
 
 export default class CreepManager {

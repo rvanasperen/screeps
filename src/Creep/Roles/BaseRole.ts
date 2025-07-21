@@ -1,4 +1,4 @@
-import Job from '../../Job/Job';
+import Job from '@/Job/Job';
 
 export default abstract class BaseRole {
     protected readonly creep: Creep;

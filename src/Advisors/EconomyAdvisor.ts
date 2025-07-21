@@ -1,4 +1,4 @@
-import JobType from '../Job/JobType';
+import JobType from '@/Job/JobType';
 import BaseAdvisor from './BaseAdvisor';
 
 export class EconomyAdvisor extends BaseAdvisor {
