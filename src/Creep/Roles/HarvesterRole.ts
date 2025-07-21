@@ -25,12 +25,20 @@ export class HarvesterRole extends BaseRole {
 
         const target: Source = Game.getObjectById(this.job.targetId);
 
-        if (this.creep.harvest(target) === ERR_NOT_IN_RANGE) {
+        const result = this.creep.harvest(target);
+
+        if (result === ERR_NOT_IN_RANGE) {
             this.creep.moveTo(target, {
                 visualizePathStyle: {
                     stroke: '#ffaa00',
                 },
             });
+
+            return;
+        }
+
+        if (result === OK && this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
+            this.state = HarvesterState.Return;
         }
     }
 
@@ -62,12 +70,23 @@ export class HarvesterRole extends BaseRole {
             throw new Error('No structure found to transfer energy to');
         }
 
-        if (this.creep.transfer(target, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+        const result = this.creep.transfer(target, RESOURCE_ENERGY);
+
+        if (result === ERR_NOT_IN_RANGE) {
             this.creep.moveTo(target, {
                 visualizePathStyle: {
                     stroke: '#ffffff',
                 },
             });
+
+            return;
+        }
+
+        if (
+            result === OK &&
+            this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === this.creep.store.getCapacity(RESOURCE_ENERGY)
+        ) {
+            this.state = HarvesterState.Harvest;
         }
     }
 }
