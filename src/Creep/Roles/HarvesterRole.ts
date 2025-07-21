@@ -1,25 +1,27 @@
 import BaseRole from './BaseRole';
 
 enum HarvesterState {
-    Harvest,
-    Return,
+    Harvest = 'harvest',
+    Return = 'return',
 }
 
 export class HarvesterRole extends BaseRole {
-    private state: HarvesterState = HarvesterState.Harvest;
-
     public run(): void {
+        if (this.creep.memory.state === undefined) {
+            this.creep.memory.state = HarvesterState.Harvest;
+        }
+
         const stateMethods = {
-            [HarvesterState.Harvest]: this.runHarvest,
-            [HarvesterState.Return]: this.runReturn,
+            [HarvesterState.Harvest]: () => this.runHarvest(),
+            [HarvesterState.Return]: () => this.runReturn(),
         };
 
-        stateMethods[this.state].call(this);
+        stateMethods[this.creep.memory.state as HarvesterState]();
     }
 
     private runHarvest(): void {
         if (this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-            this.state = HarvesterState.Return;
+            this.creep.memory.state = HarvesterState.Return;
             return;
         }
 
@@ -38,13 +40,13 @@ export class HarvesterRole extends BaseRole {
         }
 
         if (result === OK && this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) {
-            this.state = HarvesterState.Return;
+            this.creep.memory.state = HarvesterState.Return;
         }
     }
 
     private runReturn(): void {
         if (this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === this.creep.store.getCapacity(RESOURCE_ENERGY)) {
-            this.state = HarvesterState.Harvest;
+            this.creep.memory.state = HarvesterState.Harvest;
             return;
         }
 
@@ -86,7 +88,7 @@ export class HarvesterRole extends BaseRole {
             result === OK &&
             this.creep.store.getFreeCapacity(RESOURCE_ENERGY) === this.creep.store.getCapacity(RESOURCE_ENERGY)
         ) {
-            this.state = HarvesterState.Harvest;
+            this.creep.memory.state = HarvesterState.Harvest;
         }
     }
 }
