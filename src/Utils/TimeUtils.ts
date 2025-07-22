@@ -1,7 +1,7 @@
-export function every(ticks: number) {
+export function every(interval: number) {
     return {
         ticks: (callback: () => void) => {
-            if (Game.time % ticks === 0) {
+            if (Game.time % interval === 0) {
                 callback();
             }
         },
