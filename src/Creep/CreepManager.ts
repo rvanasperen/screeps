@@ -1,6 +1,6 @@
 import JobManager from '@/Job/JobManager';
 import JobType from '@/Job/JobType';
-import { HarvesterRole } from './Roles';
+import HarvesterRole from './Roles/HarvesterRole';
 
 export default class CreepManager {
     private readonly jobManager: JobManager;

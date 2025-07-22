@@ -5,7 +5,7 @@ enum HarvesterState {
     Return = 'return',
 }
 
-export class HarvesterRole extends BaseRole {
+export default class HarvesterRole extends BaseRole {
     public run(): void {
         if (this.creep.memory.state === undefined) {
             this.creep.memory.state = HarvesterState.Harvest;

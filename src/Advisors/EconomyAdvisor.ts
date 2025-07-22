@@ -1,7 +1,7 @@
 import JobType from '@/Job/JobType';
 import BaseAdvisor from './BaseAdvisor';
 
-export class EconomyAdvisor extends BaseAdvisor {
+export default class EconomyAdvisor extends BaseAdvisor {
     public run(): void {
         // console.log('    EconomyAdvisor');
 
